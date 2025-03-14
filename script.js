@@ -43,28 +43,40 @@ class CashRegister {
             return 'No change due - customer paid with exact cash'
         } else {
             this.change = Number(parseFloat(payment - this.price).toFixed(2));
-            alert(`Price: ${this.price}$. received ${payment}$. Your change is ${this.change}$`)
+            // alert(`Price: ${this.price}$. received ${payment}$. Your change is ${this.change}$`)
         }
     }
 
     calculateChangeDenomination() {
         if (this.change) {
-            const changeDueObj = {};
-            const denominationArray = Object.entries(this.denomination).reverse();
             const denominationPieces = {};
+            const denominationArray = Object.entries(this.denomination).reverse();
+            const availableDenominationTotal = this.cashInDrawer.reverse();
             let remainingChange = this.change;
-            denominationArray.forEach(([deno, value]) => {
+            denominationArray.forEach(([deno, value], index) => {
+                const remainingPieces = Math.round((availableDenominationTotal[index][1] / value) * 100) / 100;
+                const piecesRequired = Math.floor(remainingChange / value);
                 if (value < this.change && remainingChange > 0) {
-                    denominationPieces[deno] = Math.floor(remainingChange / value);
-                    remainingChange -= value * denominationPieces[deno];
-                    remainingChange = Math.floor(remainingChange * 100) / 100;
+                    if ((remainingPieces > piecesRequired) && piecesRequired) {
+                        remainingChange -= value * piecesRequired;
+                        denominationPieces[deno] = piecesRequired
+                    } else if (piecesRequired) {
+                        remainingChange -= value * remainingPieces;
+                        denominationPieces[deno] = remainingPieces
+                    }
+                    remainingChange = Math.round(remainingChange * 100) / 100;
                 }
-            })
-            Object.entries(denominationPieces).forEach(([deno, val]) => {
-                changeDueObj[deno] = val * this.denomination[deno]
-            })
+            }) 
+            if (!remainingChange) {
+                const changeDueObj = {};
+                Object.entries(denominationPieces).forEach(([deno, val]) => {
+                    changeDueObj[deno] = val * this.denomination[deno]
+                })
+                return changeDueObj
+            } else {
+                return {'Insufficient': 'Funds'}
+            }
             console.table(denominationPieces)
-            return changeDueObj
         } else {
             console.warn('Nothing to calculate!');
             return false
@@ -74,10 +86,14 @@ class CashRegister {
 
 const shop = new CashRegister(price, cid, usCurrency);
 
-shop.price = 3.26;
+shop.price = 19.5;
+
+shop.cashInDrawer = [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]
 cost.textContent = `Shop price $${shop.price}`;
 
-const renderChangeInDrawer = () => {
+
+
+const renderChangeInDrawer = (cid) => {
     cid.forEach((denomination) => {
         const newElement = document.createElement('li');
         newElement.textContent = `${denomination[0]}: `;
@@ -88,6 +104,7 @@ const renderChangeInDrawer = () => {
 
 const renderChangeDue = (change) => {
     if (change) {
+        console.warn(shop.change);
         console.table(change);
         changeDue.textContent = 'Status: OPEN '
         Object.entries(change).forEach(([deno, val]) => {
@@ -113,5 +130,5 @@ cash.addEventListener('keydown', (e) => {
     }
 })
 
-renderChangeInDrawer();
+renderChangeInDrawer(shop.cashInDrawer);
 
