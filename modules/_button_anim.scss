@@ -1,0 +1,37 @@
+$gradient-color-from: hsl(0, 0%, 14%);
+$gradient-color-to: hsl(0, 0%, 44%);
+
+@mixin button-background {
+    background: linear-gradient(150deg, $gradient-color-from 0%, $gradient-color-from 35%, $gradient-color-to 50%, $gradient-color-from 65%);
+    background-size: 300% 300%;
+}
+
+.button-shine-anim {
+    @include button-background;
+    background-position: 100% 100%;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    width: 8rem;
+    margin: 0 1rem;
+    padding: 0.65rem 2rem;
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: all 0.15s ease;
+    &:hover { transform: scale(1.05); }
+    &:active { transform: scale(1); }
+}
+
+.active-shine-anim { 
+    @include button-background;
+    animation: gradient-animation 400ms ease-in reverse forwards;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}

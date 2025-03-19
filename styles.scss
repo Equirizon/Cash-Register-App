@@ -1,0 +1,117 @@
+// @use "modules/logo_styling" as logo;
+// @use "modules/button_anim" as button-animation;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cinzel:wght@500&family=DM+Sans:wght@500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$text-color: #ffecec;
+$font-family: 'montserrat','Arial', sans-serif;
+$background-color: #4b0022;
+$button-bg-color: hsl(337, 74%, 45%);
+$gradient-color-from: #242424;
+$gradient-color-to: #242424;
+$output-max-width: 20rem;
+
+:root {
+    --text-color: #{$text-color};
+    --font-family: #{$font-family};
+    --background: #{$background-color};
+    --gradient-color-from: #{$gradient-color-from};
+    --gradient-color-to: #{$gradient-color-to};
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-family), Arial, Helvetica, sans-serif;
+}
+
+body {
+    /* height: 100vh;
+    width: 100%; */
+    background-color: var(--background);
+    color: var(--text-color)
+}
+
+@mixin flex-center-column{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+header {
+    @include flex-center-column;
+    margin: 1rem 0 auto;
+}
+
+main {
+    @include flex-center-column;
+    padding: 1rem;
+}
+
+section {
+    @include flex-center-column;
+    
+}
+
+h1 {
+    color: hsl(325, 100%, 50%);
+}
+
+li {
+    list-style-type: none;
+    margin: 0.6rem;
+}
+
+label {
+    align-content: center;
+}
+
+input {
+    font-size: 1.2rem;
+    border-radius: .4rem;
+    border: 2px solid hsl(288, 100%, 30%);
+    padding: 0.2rem .4rem;
+}
+
+.drawer {
+    color: $text-color;
+    padding: 1.5rem 2.5rem;
+    background-size: 200% 200%;
+    font-weight: 500;
+    background: linear-gradient(135deg, hsl(303, 100%, 22%) 0%, hsl(342, 78%, 32%) 100%);
+    border-radius: .8rem;
+    box-shadow: 5px 4px 12px 5px hsla(0, 0%, 0%, 0.18);
+}
+
+.container {
+    @include flex-center-column;
+    width: max-content;
+    * {
+        margin: 1rem;
+    }
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#change-due {
+    background: linear-gradient(135deg, hsl(303, 100%, 22%) 0%, hsl(337, 87%, 32%) 100%);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+    border-radius: 0.3rem;
+    padding: 1rem;
+    animation: fade-in 300ms ease-in-out;
+    height: min-content;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

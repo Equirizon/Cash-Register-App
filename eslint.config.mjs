@@ -10,7 +10,6 @@ export default [
   {
     rules: {
     'no-console': 1,
-    'no-console': 2,
     'semi': ['error', 'always'],
     'quotes': ['error', 'single']
     }
