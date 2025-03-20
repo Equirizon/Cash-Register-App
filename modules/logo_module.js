@@ -3,11 +3,11 @@ const logoAnimation = () => {
         if (!document.querySelector('header')) {
             console.warn('"<header>" not found: adding <header> in <body>');
             const header = document.createElement('header');
-            document.body.insertAdjacentElement("afterbegin", header);
+            document.body.insertAdjacentElement('afterbegin', header);
         }
 
         if (!document.querySelector('.my-logo')) {
-            console.warn(`class "my-logo" not found: adding <img>`);
+            console.warn('class "my-logo" not found: adding <img>');
             const header = document.querySelector('header');
             const logoDiv = document.createElement('div');
             logoDiv.id = 'div-logo';
@@ -16,16 +16,16 @@ const logoAnimation = () => {
             <a href="https://github.com/Equirizon" target="_blank">
             <img src="assets/Folder Icon 1.5.png" alt="Icon" class="my-logo" />
             </a>
-            `
-            header.insertAdjacentElement("afterbegin", logoDiv);
+            `;
+            header.insertAdjacentElement('afterbegin', logoDiv);
         } else {
             console.log('<a> <img> present');
             console.warn('make sure to include "assets/Folder Icon 1.5.png" in root directory');
         }
         
-        const logo = document.querySelector('.my-logo')
+        const logo = document.querySelector('.my-logo');
         addHoverListeners(logo);
-    }
+    };
 
 
     const injectStyles = () => {
@@ -65,11 +65,11 @@ const logoAnimation = () => {
                         filter: hue-rotate(20deg);
                     }
                 }
-                `
+                `;
 
             document.head.appendChild(logo);
         }
-    }
+    };
     
     const addHoverListeners = (logo) => {
         if (logo) {
@@ -84,22 +84,22 @@ const logoAnimation = () => {
         } else {
             console.error('logo does not exist');
         }
-    }
+    };
     
     const gradAnim = (logo) => {
         const hover = document.querySelector('.hover');
         const computedStyle = window.getComputedStyle(hover);
         const hue = computedStyle.filter;
-        logo.style.setProperty('filter', hue)
+        logo.style.setProperty('filter', hue);
         
         setTimeout(() => {
-            logo.style.setProperty('filter', `hue-rotate(0deg)`);
-        },1000);
-    }
+            logo.style.setProperty('filter', 'hue-rotate(0deg)');
+        }, 1000);
+    };
     
     injectLogoHTML();
     injectStyles();
-}
+};
 
 export { logoAnimation };
 

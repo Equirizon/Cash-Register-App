@@ -50,7 +50,7 @@ const buttonAnimation = (button, gradFrom, gradTo, color) => {
 
     const addClass = (button) => {
         button.classList.add('button-shine-anim');
-    }
+    };
 
     addClass(button);
 
